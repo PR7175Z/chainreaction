@@ -17,7 +17,15 @@ document.addEventListener('DOMContentLoaded', () => {
             let val = e.target.getAttribute('data-value');
             val = (val == null)? 0: val;
             val++;
-            e.target.setAttribute('data-value', val);
+            if(val < 4){
+                e.target.innerHTML = val;
+                e.target.setAttribute('data-value', val);
+            }else{
+                e.target.innerHTML = 0;
+                e.target.setAttribute('data-value', 0);
+                console.log(e.target.classList)
+                console.log(e.target.parentNode);
+            }
         });
     })
 });
