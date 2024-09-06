@@ -20,11 +20,37 @@ document.addEventListener('DOMContentLoaded', () => {
             if(val < 4){
                 e.target.innerHTML = val;
                 e.target.setAttribute('data-value', val);
+                let currentClass = e.target.classList;
+                let currentParent = e.target.parentNode.classList;
+
+                let columnCount = currentClass.value.split('column');
+                console.log(columnCount[1]);
+
+                console.log(currentClass);
+                console.log(currentParent);
             }else{
                 e.target.innerHTML = 0;
                 e.target.setAttribute('data-value', 0);
-                console.log(e.target.classList)
-                console.log(e.target.parentNode);
+                let currentClass = e.target.classList;
+                let currentParent = e.target.parentNode.classList;
+
+                let columnCount = currentClass.value.split('column');
+                let rowCount = currentParent.value.split('row');
+                leftrow = parseInt(rowCount[1]) - 1;
+                rightrow = parseInt(rowCount[1]) + 1; 
+                leftcol = parseInt(columnCount[1]) - 1;
+                rightcol = parseInt(columnCount[1]) + 1;
+
+                document.querySelector(".row"+leftrow+" .column"+leftcol).innerHTML = 1;
+
+                console.log(leftcol);
+                console.log(rightcol);
+                console.log(leftrow);
+                console.log(rightrow);
+
+                console.log(currentClass);
+                console.log(currentParent);
+                
             }
         });
     })
