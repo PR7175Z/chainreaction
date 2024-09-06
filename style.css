@@ -1,0 +1,7 @@
+p {
+    border: 1px solid #000;
+    height: 20px;
+    margin: 5px 7px;
+    width: 20px;
+    display: inline-block;
+}
