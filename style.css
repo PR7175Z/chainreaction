@@ -5,3 +5,11 @@ p {
     width: 20px;
     display: inline-block;
 }
+
+.red{
+    background: #f00;
+}
+
+.blue{
+    background: #00f;
+}
