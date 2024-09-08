@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function chainreaction(e, turn){
+    function chainreaction(e, turn){        
         const currentClass = e.target.classList;
         const currentParent = e.target.parentNode.classList;
 
@@ -27,6 +27,9 @@ document.addEventListener('DOMContentLoaded', () => {
         const rightcol = parseInt(currentCol) + 1;
 
         setTimeout(() => {
+            if(e.target.innerHTML == 0){
+                e.target.setAttribute('data-class', '');
+            }
             if(document.querySelector(`.row${uprow} .column${currentCol}`)){
                 document.querySelector(`.row${uprow} .column${currentCol}`).innerHTML = parseInt(document.querySelector(`.row${uprow} .column${currentCol}`).innerHTML) + 1;
                 document.querySelector(`.row${uprow} .column${currentCol}`).setAttribute('data-class', turn);
@@ -54,7 +57,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 document.querySelector('.turn strong').innerHTML = "Reds Turn";
                 turnClass = 'blue';
             }
-            // let val = e.target.getAttribute('data-value');
             let val = parseInt(e.target.innerHTML);
             if(!e.target.getAttribute('data-class') || e.target.getAttribute('data-class') == turnClass){
                 val = (val == null)? 0: val;
@@ -71,6 +73,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         e.target.setAttribute('data-value', 0);
                     }, 500);
                 }
+                if(parseInt(e.target.innerHTML) == 0){
+                    e.target.setAttribute('data-class', '');
+                }
             }else{
                 turn = -turn;
                 console.log('Mistake');
@@ -86,7 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => {
                     mutationsList[0].target.innerHTML = 0;
                 }, 500);
-                // console.log(turnClass);
                 chainreaction(mutationsList[0], turnClass);
             }
         });
