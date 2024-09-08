@@ -1,15 +1,25 @@
+*{
+    font-family: poppins;
+}
+
 p {
     border: 1px solid #000;
-    height: 20px;
     margin: 5px 7px;
-    width: 20px;
+    width: 30px;
     display: inline-block;
+    text-align: center;
+    padding: 2px;
+    border-radius: 4px;
 }
 
-.red{
+p[data-class="red"]{
     background: #f00;
+    color: #fff;
+    border-color: #f00;
 }
 
-.blue{
+p[data-class="blue"]{
     background: #00f;
+    color: #fff;
+    border-color: #00f;
 }
