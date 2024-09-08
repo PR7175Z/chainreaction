@@ -15,7 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    function chainreaction(e){
+    function chainreaction(e, turn){
         const currentClass = e.target.classList;
         const currentParent = e.target.parentNode.classList;
 
@@ -29,16 +29,16 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
             if(document.querySelector(`.row${uprow} .column${currentCol}`)){
                 document.querySelector(`.row${uprow} .column${currentCol}`).innerHTML = parseInt(document.querySelector(`.row${uprow} .column${currentCol}`).innerHTML) + 1;
-                // document.querySelector(`.row${uprow} .column${currentCol}`).setAttribute('data-class', 'red');
+                document.querySelector(`.row${uprow} .column${currentCol}`).setAttribute('data-class', turn);
             }if(document.querySelector(".row"+downrow+" .column"+currentCol)){
                 document.querySelector(".row"+downrow+" .column"+currentCol).innerHTML = parseInt(document.querySelector(".row"+downrow+" .column"+currentCol).innerHTML) + 1;
-                // document.querySelector(".row"+downrow+" .column"+currentCol).setAttribute('data-class', 'red');
+                document.querySelector(".row"+downrow+" .column"+currentCol).setAttribute('data-class', turn);
             }if(document.querySelector(".row"+currentRowCount+" .column"+leftcol)){
                 document.querySelector(".row"+currentRowCount+" .column"+leftcol).innerHTML = parseInt(document.querySelector(".row"+currentRowCount+" .column"+leftcol).innerHTML) + 1;
-                // document.querySelector(".row"+currentRowCount+" .column"+leftcol).setAttribute('data-class', 'red');
+                document.querySelector(".row"+currentRowCount+" .column"+leftcol).setAttribute('data-class', turn);
             }if(document.querySelector(".row"+currentRowCount+" .column"+rightcol)){    
                 document.querySelector(".row"+currentRowCount+" .column"+rightcol).innerHTML = parseInt(document.querySelector(".row"+currentRowCount+" .column"+rightcol).innerHTML) + 1;
-                // document.querySelector(".row"+currentRowCount+" .column"+rightcol).setAttribute('data-class', 'red');
+                document.querySelector(".row"+currentRowCount+" .column"+rightcol).setAttribute('data-class', turn);
             }
         }, 500);
     }
@@ -86,7 +86,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 setTimeout(() => {
                     mutationsList[0].target.innerHTML = 0;
                 }, 500);
-                chainreaction(mutationsList[0]);
+                // console.log(turnClass);
+                chainreaction(mutationsList[0], turnClass);
             }
         });
 
