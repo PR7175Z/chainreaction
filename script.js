@@ -1,6 +1,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     let turn = 1;
     let turnClass = 'red';
+    let preventOtherClick = false;
+    let clickCount = 0;
+    let numberOfPlayer = 2;
 
     const root = document.getElementById('root');
     for(let i = 0; i<8; i++){
@@ -58,7 +61,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 turnClass = 'blue';
             }
             let val = parseInt(e.target.innerHTML);
-            if(!e.target.getAttribute('data-class') || e.target.getAttribute('data-class') == turnClass){
+            if(numberOfPlayer == clickCount){
+                preventOtherClick = true;
+            }
+            if((!e.target.getAttribute('data-class') && !preventOtherClick) || e.target.getAttribute('data-class') == turnClass){
                 val = (val == null)? 0: val;
                 val++;
 
@@ -76,6 +82,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(parseInt(e.target.innerHTML) == 0){
                     e.target.setAttribute('data-class', '');
                 }
+                clickCount++;
             }else{
                 turn = -turn;
                 console.log('Mistake');
