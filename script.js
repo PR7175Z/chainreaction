@@ -33,37 +33,42 @@ document.addEventListener('DOMContentLoaded', () => {
             if(e.target.innerHTML == 0){
                 e.target.setAttribute('data-class', '');
             }
-            if(document.querySelector(`.row${uprow} .column${currentCol}`)){
-                document.querySelector(`.row${uprow} .column${currentCol}`).innerHTML = parseInt(document.querySelector(`.row${uprow} .column${currentCol}`).innerHTML) + 1;
-                document.querySelector(`.row${uprow} .column${currentCol}`).setAttribute('data-class', turn);
-            }if(document.querySelector(".row"+downrow+" .column"+currentCol)){
-                document.querySelector(".row"+downrow+" .column"+currentCol).innerHTML = parseInt(document.querySelector(".row"+downrow+" .column"+currentCol).innerHTML) + 1;
-                document.querySelector(".row"+downrow+" .column"+currentCol).setAttribute('data-class', turn);
-            }if(document.querySelector(".row"+currentRowCount+" .column"+leftcol)){
-                document.querySelector(".row"+currentRowCount+" .column"+leftcol).innerHTML = parseInt(document.querySelector(".row"+currentRowCount+" .column"+leftcol).innerHTML) + 1;
-                document.querySelector(".row"+currentRowCount+" .column"+leftcol).setAttribute('data-class', turn);
-            }if(document.querySelector(".row"+currentRowCount+" .column"+rightcol)){    
-                document.querySelector(".row"+currentRowCount+" .column"+rightcol).innerHTML = parseInt(document.querySelector(".row"+currentRowCount+" .column"+rightcol).innerHTML) + 1;
-                document.querySelector(".row"+currentRowCount+" .column"+rightcol).setAttribute('data-class', turn);
+            const upperCell = document.querySelector(`.row${uprow} .column${currentCol}`);
+            const lowerCell = document.querySelector(`.row${downrow} .column${currentCol}`);
+            const leftCell = document.querySelector(`.row${currentRowCount} .column${leftcol}`);
+            const rightCell = document.querySelector(`.row${currentRowCount} .column${rightcol}`);
+            if(upperCell){
+                upperCell.innerHTML = parseInt(upperCell.innerHTML) + 1;
+                upperCell.setAttribute('data-class', turn);
+            }if(lowerCell){
+                lowerCell.innerHTML = parseInt(lowerCell.innerHTML) + 1;
+                lowerCell.setAttribute('data-class', turn);
+            }if(leftCell){
+                leftCell.innerHTML = parseInt(leftCell.innerHTML) + 1;
+                leftCell.setAttribute('data-class', turn);
+            }if(rightCell){    
+                rightCell.innerHTML = parseInt(rightCell.innerHTML) + 1;
+                rightCell.setAttribute('data-class', turn);
             }
+            console.log(preventOtherClick);
         }, 500);
     }
 
     let p =document.querySelectorAll('p');
+    const turnText = document.querySelector('.turn strong');
     p.forEach((element) => {
         element.addEventListener('click', (e)=>{
             turn = -turn;
             if(turn == 1){
-                document.querySelector('.turn strong').innerHTML = "Blues Turn";
+                turnText.innerHTML = "Blues Turn";
                 turnClass = 'red';
             }else{
-                document.querySelector('.turn strong').innerHTML = "Reds Turn";
+                turnText.innerHTML = "Reds Turn";
                 turnClass = 'blue';
             }
             let val = parseInt(e.target.innerHTML);
-            if(numberOfPlayer == clickCount){
-                preventOtherClick = true;
-            }
+            preventOtherClick = numberOfPlayer <= clickCount;
+
             if((!e.target.getAttribute('data-class') && !preventOtherClick) || e.target.getAttribute('data-class') == turnClass){
                 val = (val == null)? 0: val;
                 val++;
@@ -93,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
         observer = new MutationObserver((mutationsList, observer) => {
             const parent = mutationsList[0].target.parentNode;
             const currentNodeValue = mutationsList[0].target.innerHTML;
-            // console.log(parent);
+            console.log(preventOtherClick);
             if(currentNodeValue >= 4){
                 setTimeout(() => {
                     mutationsList[0].target.innerHTML = 0;
