@@ -50,7 +50,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 rightCell.innerHTML = parseInt(rightCell.innerHTML) + 1;
                 rightCell.setAttribute('data-class', turn);
             }
-            console.log(preventOtherClick);
+            if(preventOtherClick){
+                let c = 0;
+                document.querySelectorAll('p').forEach((element)=>{
+                    if(element.getAttribute('data-class') != turn || element.getAttribute('data-class') != null ){
+                        c++;
+                    }
+                });
+                console.log(c);
+                if(c == 0){
+                    console.log(`${turn} wins`);
+                }
+            }
         }, 500);
     }
 
@@ -98,7 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
         observer = new MutationObserver((mutationsList, observer) => {
             const parent = mutationsList[0].target.parentNode;
             const currentNodeValue = mutationsList[0].target.innerHTML;
-            console.log(preventOtherClick);
+            // console.log(preventOtherClick);
             if(currentNodeValue >= 4){
                 setTimeout(() => {
                     mutationsList[0].target.innerHTML = 0;
