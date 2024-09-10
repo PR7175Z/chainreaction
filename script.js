@@ -71,12 +71,18 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     }
 
+    const turnClassdict = {
+        1 : "red",
+        2 : "blue",
+    }
+
     const p =document.querySelectorAll('p');
     const turnText = document.querySelector('.turn strong');
     p.forEach((element) => {
         element.addEventListener('click', (e)=>{
             if(clickable){
                 turn = -turn;
+                // console.log(turnClassdict[turn]);
                 if(turn == 1){
                     turnText.innerHTML = "Blues Turn";
                     turnClass = 'red';
