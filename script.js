@@ -65,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(c == 0){
                     wintext.innerHTML = `<strong style="text-transform: Capitalize;">${turn} wins</strong>`;
                     clickable = false;
+                    document.querySelector('.gameoverwrap').classList.remove('d-none');
                 }
             }
         }, 500);
