@@ -63,9 +63,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
                 if(c == 0){
-                    wintext.innerHTML = `<strong>${turn} wins</strong>`;
+                    wintext.innerHTML = `<strong style="text-transform: Capitalize;">${turn} wins</strong>`;
                     clickable = false;
-                    // console.log(`${turn} wins`);
                 }
             }
         }, 500);
@@ -110,8 +109,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 }else{
                     turn = -turn;
                     errorMessage.innerHTML = 'Error: <strong>Invalid Move</strong>';
-                    console.log('Mistake');
-                    console.log(turnClass);
                 }
             }
         });
