@@ -2,6 +2,10 @@
     font-family: poppins;
 }
 
+body{
+    margin-top: 30px;
+}
+
 p {
     border: 1px solid #000;
     margin: 5px 7px;
@@ -23,4 +27,17 @@ p[data-class="blue"]{
     background: #00f;
     color: #fff;
     border-color: #00f;
+}
+
+#root{
+    margin-top: 10px;
+}
+
+.turn{
+    display: inline-block;
+}
+
+.error{
+    display: inline-block;
+    margin-left: 20px;
 }
