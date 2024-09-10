@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     let preventOtherClick = false;
     let clickCount = 0;
     let numberOfPlayer = 2;
+    let clickable = true;
+    const errorMessage = document.querySelector('.error');
 
     const root = document.getElementById('root');
     for(let i = 0; i<8; i++){
@@ -37,6 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const lowerCell = document.querySelector(`.row${downrow} .column${currentCol}`);
             const leftCell = document.querySelector(`.row${currentRowCount} .column${leftcol}`);
             const rightCell = document.querySelector(`.row${currentRowCount} .column${rightcol}`);
+            const wintext = document.querySelector('.wintext')
             if(upperCell){
                 upperCell.innerHTML = parseInt(upperCell.innerHTML) + 1;
                 upperCell.setAttribute('data-class', turn);
@@ -53,63 +56,69 @@ document.addEventListener('DOMContentLoaded', () => {
             if(preventOtherClick){
                 let c = 0;
                 document.querySelectorAll('p').forEach((element)=>{
-                    if(element.getAttribute('data-class') != turn || element.getAttribute('data-class') != null ){
-                        c++;
+                    if(element.getAttribute('data-class')){
+                        if(element.getAttribute('data-class') != turn){
+                            c++;
+                        }
                     }
                 });
-                console.log(c);
                 if(c == 0){
-                    console.log(`${turn} wins`);
+                    wintext.innerHTML = `<strong>${turn} wins</strong>`;
+                    clickable = false;
+                    // console.log(`${turn} wins`);
                 }
             }
         }, 500);
     }
 
-    let p =document.querySelectorAll('p');
+    const p =document.querySelectorAll('p');
     const turnText = document.querySelector('.turn strong');
     p.forEach((element) => {
         element.addEventListener('click', (e)=>{
-            turn = -turn;
-            if(turn == 1){
-                turnText.innerHTML = "Blues Turn";
-                turnClass = 'red';
-            }else{
-                turnText.innerHTML = "Reds Turn";
-                turnClass = 'blue';
-            }
-            let val = parseInt(e.target.innerHTML);
-            preventOtherClick = numberOfPlayer <= clickCount;
-
-            if((!e.target.getAttribute('data-class') && !preventOtherClick) || e.target.getAttribute('data-class') == turnClass){
-                val = (val == null)? 0: val;
-                val++;
-
-                if(val < 4){
-                    e.target.innerHTML = val;
-                    e.target.setAttribute('data-value', val);
-                    e.target.setAttribute('data-class', turnClass);
-                }else{
-                    e.target.innerHTML = val;
-                    setTimeout(() => {
-                        e.target.innerHTML = 0;
-                        e.target.setAttribute('data-value', 0);
-                    }, 500);
-                }
-                if(parseInt(e.target.innerHTML) == 0){
-                    e.target.setAttribute('data-class', '');
-                }
-                clickCount++;
-            }else{
+            if(clickable){
                 turn = -turn;
-                console.log('Mistake');
-                console.log(turnClass);
+                if(turn == 1){
+                    turnText.innerHTML = "Blues Turn";
+                    turnClass = 'red';
+                }else{
+                    turnText.innerHTML = "Reds Turn";
+                    turnClass = 'blue';
+                }
+                let val = parseInt(e.target.innerHTML);
+                preventOtherClick = numberOfPlayer <= clickCount;
+
+                if((!e.target.getAttribute('data-class') && !preventOtherClick) || e.target.getAttribute('data-class') == turnClass){
+                    val = (val == null)? 0: val;
+                    val++;
+
+                    if(val < 4){
+                        e.target.innerHTML = val;
+                        e.target.setAttribute('data-value', val);
+                        e.target.setAttribute('data-class', turnClass);
+                    }else{
+                        e.target.innerHTML = val;
+                        setTimeout(() => {
+                            e.target.innerHTML = 0;
+                            e.target.setAttribute('data-value', 0);
+                        }, 500);
+                    }
+                    if(parseInt(e.target.innerHTML) == 0){
+                        e.target.setAttribute('data-class', '');
+                    }
+                    clickCount++;
+                    errorMessage.innerHTML = '';
+                }else{
+                    turn = -turn;
+                    errorMessage.innerHTML = 'Error: <strong>Invalid Move</strong>';
+                    console.log('Mistake');
+                    console.log(turnClass);
+                }
             }
         });
 
         observer = new MutationObserver((mutationsList, observer) => {
             const parent = mutationsList[0].target.parentNode;
             const currentNodeValue = mutationsList[0].target.innerHTML;
-            // console.log(preventOtherClick);
             if(currentNodeValue >= 4){
                 setTimeout(() => {
                     mutationsList[0].target.innerHTML = 0;
